@@ -1,0 +1,124 @@
+/* Glance-card visuals adapted from Zia (c) 2026 z1nk, MIT; see ZIA-LICENSE.txt.
+   Presentation-only attributes: never imitate Zen's native zen-glance-tab. */
+.tabbrowser-tab[gwh-hidden-preview] { display: none !important; }
+.gwh-morph-ghost {
+  position: fixed;
+  z-index: 2147483647;
+  pointer-events: none !important;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-inline: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  transform-origin: 0 0;
+  background: light-dark(rgba(40,40,55,.07), rgba(255,255,255,.08));
+}
+.gwh-morph-ghost > img { width: 16px; height: 16px; object-fit: contain; flex: none; }
+.gwh-morph-ghost > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.gwh-exit-card {
+  position: fixed;
+  z-index: 2147483646;
+  pointer-events: none !important;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: visible;
+}
+.gwh-exit-card [hidden] { display: none !important; }
+.gwh-badge[gwh-morph-card] > .gwh-card { animation: none !important; }
+/* Card geometry follows Zia's Glance thumbnail: 36px wide, -8deg tilt,
+   cropped at the tab edge. Essentials keep Zia's 26px favicon-card style. */
+.gwh-badge {
+  display: inline-flex;
+  flex: 0 0 36px;
+  position: relative;
+  width: 36px;
+  height: 30px;
+  margin-inline-start: calc((36px + var(--zia-close-size, 22px)) / -2);
+  margin-inline-end: calc((var(--zia-close-size, 22px) - 36px) / 2);
+  order: 3;
+  align-items: flex-start;
+  justify-content: center;
+  --gwh-edge: calc(var(--zia-shine-width, 1px) + .5px);
+  clip-path: inset(
+    calc(var(--gwh-cut-top, -2px) + var(--gwh-edge))
+    calc(var(--gwh-cut-right, -4px) + var(--gwh-edge))
+    calc(var(--gwh-cut-bottom, -2px) + var(--gwh-edge))
+    -12px round max(0px, calc(var(--zia-tab-radius, 6px) - var(--gwh-edge)))
+  );
+}
+.gwh-badge [hidden] { display: none !important; }
+.gwh-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex: none;
+  width: 36px;
+  height: 42px;
+  rotate: -8deg;
+  translate: 0 3px;
+  border-radius: 6px;
+  background: light-dark(rgba(40,40,55,.08), rgba(255,255,255,.16));
+  box-shadow: var(--zia-glass-edge-thick, inset 0 0 0 1px light-dark(rgba(40,40,55,.2), rgba(255,255,255,.2))), 0 1px 4px rgba(0,0,0,.2);
+  transition: rotate .45s cubic-bezier(.16,1,.3,1);
+  animation: zia-glance-rise 1.1s ease-in-out backwards;
+}
+.gwh-card-icon { width: 13px; height: 13px; object-fit: contain; }
+.gwh-card-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  transition: filter .15s ease;
+  box-shadow: 0 0 0 .5px rgba(255,255,255,.18), 0 2px 6px rgba(0,0,0,.5);
+}
+.gwh-card[gwh-has-picture] { background: transparent; box-shadow: none; }
+.gwh-card[gwh-has-picture] > .gwh-card-icon { visibility: hidden; }
+.tabbrowser-tab:is([gwh-preview],[gwh-return-parent]):not([zen-essential]):hover .gwh-card { rotate: -16deg; }
+.tabbrowser-tab:is([gwh-preview],[gwh-return-parent])[zen-essential] .gwh-badge {
+  position: absolute;
+  margin: 0;
+  top: 6px;
+  bottom: 6px;
+  inset-inline-end: 5px;
+  width: 26px;
+  height: auto;
+  scale: none;
+  clip-path: none;
+  overflow: visible;
+}
+.tabbrowser-tab:is([gwh-preview],[gwh-return-parent])[zen-essential] .gwh-card {
+  width: 26px;
+  height: 100%;
+  min-height: 22px;
+  rotate: 6deg;
+  translate: none;
+  animation: none;
+  border-radius: calc(9px * var(--zia-squircle-grow, 1));
+  corner-shape: var(--zia-squircle, round);
+}
+/* Zia's close-on-hover treatment, without altering tab backgrounds or glow. */
+.tabbrowser-tab:is([gwh-preview],[gwh-return-parent]):not([zen-essential]) > .tab-stack > .tab-content > .tab-reset-button { display: none !important; }
+.tabbrowser-tab:is([gwh-preview],[gwh-return-parent]):not([zen-essential]) > .tab-stack > .tab-content > .tab-close-button {
+  order: 2;
+  display: flex !important;
+  position: relative;
+  z-index: 1;
+  background-color: transparent !important;
+}
+.tabbrowser-tab:is([gwh-preview],[gwh-return-parent]):not([zen-essential]):not(:hover) > .tab-stack > .tab-content > .tab-close-button {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.tabbrowser-tab:is([gwh-preview],[gwh-return-parent]):not([zen-essential]):hover > .tab-stack > .tab-content > .tab-close-button { opacity: 1 !important; }
+.tabbrowser-tab:is([gwh-preview],[gwh-return-parent]):not([zen-essential]):hover .gwh-card-thumb { filter: brightness(.4); }
+.tabbrowser-tab:is([gwh-preview],[gwh-return-parent]):not([zen-essential]) > .tab-stack > .tab-content > .tab-close-button:hover { background-color: rgba(255,255,255,.16) !important; }
+@media (prefers-reduced-motion: reduce) {
+  .gwh-card { transition: none; animation: none; }
+  .gwh-morph-ghost, .gwh-exit-card { display: none !important; }
+}
+.tabbrowser-tab[gwh-expanding] .gwh-badge { opacity: .45; }

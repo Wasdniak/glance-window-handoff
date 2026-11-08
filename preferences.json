@@ -1,0 +1,12 @@
+[
+  {
+    "type": "dropdown",
+    "label": "Clicking a Glance tab in another window",
+    "property": "sine.glance-window-handoff.mode",
+    "defaultValue": "return",
+    "options": [
+      { "label": "Return to Glance in its original window", "value": "return" },
+      { "label": "Expand Glance in this window", "value": "expand" }
+    ]
+  }
+]

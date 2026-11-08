@@ -1,0 +1,17 @@
+{
+  "id": "glance-window-handoff",
+  "name": "Glance Window Handoff",
+  "description": "Choose whether another window returns to the original Glance or expands its preview here.",
+  "author": "Wasdniak",
+  "version": "1.3.2",
+  "homepage": "https://github.com/Wasdniak/glance-window-handoff",
+  "updatedAt": "2026-11-08T21:33:57.000Z",
+  "fork": ["zen"],
+  "style": { "chrome": "chrome.css", "content": "" },
+  "preferences": "preferences.json",
+  "scripts": {
+    "glance-window-handoff.uc.js": { "include": ["chrome://browser/content/browser.xhtml"] }
+  },
+  "readme": "README.md",
+  "supportsUnload": true
+}
